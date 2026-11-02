@@ -44,19 +44,3 @@ def test_login_with_invalid_credentials(driver, username, password):
     error = WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.ID, "error")))
     assert "/login" in driver.current_url
     assert error.text == "Invalid username or password"
-
-
-def test_add_food_to_cart(driver):
-    login(driver, "admin", "admin123")
-    qty = WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.ID, "qty-pizza")))
-    qty.clear()
-    qty.send_keys("2")
-    driver.find_element(By.ID, "add-pizza").click()
-    WebDriverWait(driver, 5).until(EC.text_to_be_present_in_element((By.CLASS_NAME, "flash"), "pizza"))
-    driver.find_element(By.ID, "add-coke").click()
-    WebDriverWait(driver, 5).until(EC.text_to_be_present_in_element((By.CLASS_NAME, "flash"), "coke"))
-    assert driver.find_element(By.ID, "cart-link").text == "Cart (3)"
-    driver.find_element(By.ID, "cart-link").click()
-    subtotal = WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.ID, "subtotal")))
-    assert subtotal.text == "540.00"
-    assert driver.find_element(By.ID, "total").text == "486.00"

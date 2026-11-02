@@ -9,7 +9,7 @@
 5. write seelenium for login with valid and invaldi cred 
 
 
-
+explain parametrize in to bedone.md in short and simple for this problem 
 
 Docker (build + run in one cmd)
 docker build -t food-ordering-app . && docker run -d --name food-app -p 5000:5000 food-ordering-app

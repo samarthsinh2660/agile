@@ -21,7 +21,7 @@ def test_valid_order_totals(subtotal, discount, expected):
 @pytest.mark.parametrize(
     "subtotal, discount",
     [
-        (500, -1),     # invalid: negative discount (just below boundary)
+        (500, -1),     # invalid: negative discount 
         (500, 100.1),  # invalid: just above boundary
         (500, 150),    # invalid: discount over 100
         (-10, 10),     # invalid: negative subtotal
