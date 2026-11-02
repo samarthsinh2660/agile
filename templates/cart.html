@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head><title>Food Order - Cart</title></head>
+<body>
+  <h1>Your Cart</h1>
+  <p><a href="{{ url_for('menu') }}">Back to menu</a></p>
+  {% for msg in get_flashed_messages() %}<p class="flash">{{ msg }}</p>{% endfor %}
+  {% if cart.items %}
+  <table>
+    <tr><th>Item</th><th>Price</th><th>Qty</th><th>Line total</th><th></th></tr>
+    {% for item, qty in cart.items.items() %}
+    <tr>
+      <td>{{ item }}</td>
+      <td>Rs {{ menu[item] }}</td>
+      <td>
+        <form method="post" action="{{ url_for('update_cart') }}">
+          <input type="hidden" name="item" value="{{ item }}">
+          <input name="qty" type="number" min="0" value="{{ qty }}" style="width:4em">
+          <button type="submit">Update</button>
+        </form>
+      </td>
+      <td>Rs {{ menu[item] * qty }}</td>
+      <td>
+        <form method="post" action="{{ url_for('remove_from_cart') }}">
+          <input type="hidden" name="item" value="{{ item }}">
+          <button type="submit">Remove</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+  <p>Subtotal: Rs <span id="subtotal">{{ "%.2f"|format(subtotal) }}</span></p>
+  <p>Total (10% discount): Rs <span id="total">{{ "%.2f"|format(total) }}</span></p>
+  {% else %}
+  <p id="empty">Your cart is empty.</p>
+  {% endif %}
+</body>
+</html>
